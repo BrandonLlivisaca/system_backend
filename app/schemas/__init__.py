@@ -15,4 +15,7 @@ __all__ = [
     "UserUpdate",
     "UserResponse",
     "UserList",
+    "LoginRequest",
+    "Token",
+    "TokenData"
 ]

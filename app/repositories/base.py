@@ -17,7 +17,7 @@ class BaseRepository(Generic[ModelType]):
         """Gets one record by id"""
         query = select(self.model).where(
             self.model.id == id,
-            self.model.is_active == True
+            self.model.is_active.is_(True)
         )
         result = await self.db.execute(query)
         return result.scalar_one_or_none()
@@ -69,6 +69,6 @@ class BaseRepository(Generic[ModelType]):
         # result = await self.db.execute(query)
         # return len(result.scalars().all())
         """Cuenta registros activos."""
-        query = select(func.count(self.model.id)).where(self.model.is_active == True)
+        query = select(func.count(self.model.id)).where(self.model.is_active.is_(True))
         result = await self.db.execute(query)
         return result.scalar() or 0

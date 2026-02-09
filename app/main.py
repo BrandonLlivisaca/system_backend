@@ -2,8 +2,7 @@ from fastapi import FastAPI
 from sqlalchemy import text
 from app.config import settings
 from app.database import engine, Base, AsyncSessionLocal
-from contextlib import contextmanager, asynccontextmanager
-from app.models import User
+from contextlib import asynccontextmanager
 from app.schemas import UserCreate, UserResponse
 from app.api.v1 import api_router
 
