@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette.status import HTTP_201_CREATED
-from yaml import serialize
 
 from app.database import get_db
 from app.models.persona import TipoPersona
@@ -54,8 +53,7 @@ async def get_person(persona_id: int, db: AsyncSession = Depends(get_db),
     persona = await service.get_persona(persona_id)
     if not persona:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f"Person not found")
-
+                            detail="Person not found")
     return persona
 
 @router.put("/{persona_id}", response_model=PersonaResponse)
@@ -83,6 +81,6 @@ async def delete_person(persona_id: int, db: AsyncSession = Depends(get_db),
     persona = await service.delete_person(persona_id)
     if not persona:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f"Person not found")
+                            detail="Person not found")
 
     return None

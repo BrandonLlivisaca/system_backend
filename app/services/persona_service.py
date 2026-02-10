@@ -1,8 +1,5 @@
-from typing import Any, Coroutine
-
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models import Persona
 from app.models.persona import Persona, TipoPersona
 from app.repositories.persona_repository import PersonaRepository
 from app.schemas.persona import PersonaCreate, PersonaUpdate
