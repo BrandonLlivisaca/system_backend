@@ -8,6 +8,13 @@ from app.schemas.user import (
 
 from app.schemas.auth import LoginRequest, Token, TokenData
 
+from app.schemas.persona import (
+    PersonaList,
+    PersonaUpdate,
+    PersonaResponse,
+    PersonaCreate
+)
+
 __all__ = [
     "BaseSchema",
     "BaseResponseSchema",
@@ -17,5 +24,9 @@ __all__ = [
     "UserList",
     "LoginRequest",
     "Token",
-    "TokenData"
+    "TokenData",
+    "PersonaCreate",
+    "PersonaList",
+    "PersonaUpdate",
+    "PersonaResponse",
 ]
