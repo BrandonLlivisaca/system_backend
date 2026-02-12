@@ -5,6 +5,7 @@ from app.database import engine, Base, AsyncSessionLocal
 from contextlib import asynccontextmanager
 from app.schemas import UserCreate, UserResponse
 from app.api.v1 import api_router
+from fastapi.middleware.cors import CORSMiddleware
 
 # @app.on_event("startup")
 # async def startup():
@@ -39,6 +40,17 @@ app = FastAPI(
     version="0.1.0",
     lifespan=lifespan,
 )
+
+#Middleware
+app.add_middleware(
+    CORSMiddleware,
+    #allow_origins=["http://localhost:5173"],  # tu frontend
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 #Register routers
 app.include_router(api_router)
