@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.database import get_db
 from app.schemas.auth import LoginRequest, Token
-from app.schemas.user import UserResponse, UserCreate
+from app.schemas.user import UserResponse, UserCreate, UserUpdate
 from app.services.auth_services import AuthService
 from app.core.dependencies import get_current_user
 from app.models.user import User
@@ -32,6 +32,26 @@ async def login(login_data: LoginRequest, db: AsyncSession = Depends(get_db)):
 async def get_current_user_info(current_user: User = Depends(get_current_user)):
     """Obtain information from the authenticated user"""
     return current_user
+
+@router.put("/password", response_model=UserResponse, status_code=status.HTTP_200_OK)
+async def change_password(user_data: UserUpdate,
+                          db: AsyncSession = Depends(get_db)):
+    service = UserService(db)
+    user = await service.get_user_by_email(str(user_data.email))
+
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Email not exists"
+        )
+    try:
+        user = await service.update_user(user.id, user_data)
+        return user
+    except Exception as error:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(error)
+        )
 
 @router.post("/register", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 async def register_first_admin(
