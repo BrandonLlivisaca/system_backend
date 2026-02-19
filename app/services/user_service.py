@@ -1,3 +1,4 @@
+from sqlalchemy.exc import NoResultFound
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.security import hash_password
@@ -65,6 +66,9 @@ class UserService:
 
     async def count_users(self) -> int:
         """Count user"""
-        return await self.repository.count()
+        try:
+            return await self.repository.count()
+        except Exception as e:
+            raise ValueError(f'Error counting users: {e}')
 
 

@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.persona import Persona, TipoPersona
-from app.repositories.persona_repository import PersonaRepository
+from app.repositories.persona_repository import PersonaRepository, IdentificacionRepository
 from app.schemas.persona import PersonaCreate, PersonaUpdate
 
 class PersonaService:
@@ -9,14 +9,37 @@ class PersonaService:
     def __init__(self, db: AsyncSession):
         self.db = db
         self.repository = PersonaRepository(db)
+        self.identificacion_repository = IdentificacionRepository(db)
 
-    async def create_persona(self, data: PersonaCreate) -> ValueError | Persona:
+    async def create_persona(self, data: PersonaCreate) -> Persona:
         """Create a new persona"""
         # Verify if the identification number exists
-        if await self.repository.identificacion_exists(data.numero_identificacion):
-            raise ValueError("Identification number already exists")
+        if data.identificacion:
+            for identificacion in data.identificacion:
+                if await self.repository.identificacion_exists(identificacion.numero):
+                    raise ValueError("Identification number already exists")
+        else:
+            raise ValueError("No identificacion found")
 
-        return await self.repository.create(data.model_dump())
+        # Crear persona sin las relaciones
+        persona_data = data.model_dump(exclude={"identificacion", "contacto"})
+        persona = await self.repository.create(persona_data)
+
+        # Crear identificaciones
+        for identificacion in data.identificacion:
+             identificacion_data = identificacion.model_dump()
+             identificacion_data["persona_id"] = persona.id
+             await self.identificacion_repository.create(identificacion_data)
+        #
+        # # Crear contactos
+        # for contacto in data.contactos:
+        #     contacto_data = contacto.model_dump()
+        #     contacto_data["persona_id"] = persona.id
+        #     await self.contacto_repository.create(contacto_data)
+
+        # Refrescar para obtener las relaciones
+        return await self.repository.get_by_id(persona.id)
+
 
     async def get_persona(self, persona_id: int) -> Persona | None:
         """Get a persona for id"""
@@ -24,7 +47,7 @@ class PersonaService:
 
     async def get_persona_by_identification(self, numero: str) -> Persona | None:
         """Get a person for identification number"""
-        return await self.repository.get_by_identifacion(numero)
+        return await self.repository.get_by_identificacion(numero)
 
     async def get_person_list(self,
                               skip: int = 0,
