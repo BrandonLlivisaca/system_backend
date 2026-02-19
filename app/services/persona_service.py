@@ -86,5 +86,5 @@ class PersonaService:
 
     async def count_persons(self):
         """Count all persons"""
-        return await self.repository.count()
+        return await self.repository.count_persons()
 
