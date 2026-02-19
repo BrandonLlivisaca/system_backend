@@ -1,3 +1,5 @@
+from email._header_value_parser import TokenList
+
 from app.schemas.base import BaseSchema, BaseResponseSchema
 from app.schemas.user import (
     UserCreate,
@@ -5,14 +7,31 @@ from app.schemas.user import (
     UserResponse,
     UserList,
 )
-
 from app.schemas.auth import LoginRequest, Token, TokenData
-
 from app.schemas.persona import (
-    PersonaList,
+    IdentificacionCreate,
+    IdentificacionResponse,
+    ContactoCreate,
+    ContactoResponse,
+    PersonaCreate,
     PersonaUpdate,
     PersonaResponse,
-    PersonaCreate
+    PersonaList,
+    ClienteCreate,
+    ClienteCreateWithPersona,
+    ClienteUpdate,
+    ClienteResponse,
+    ClienteList,
+    ProveedorCreate,
+    ProveedorCreateWithPersona,
+    ProveedorUpdate,
+    ProveedorResponse,
+    ProveedorList,
+    EmpleadoCreate,
+    EmpleadoCreateWithPersona,
+    EmpleadoUpdate,
+    EmpleadoResponse,
+    EmpleadoList,
 )
 
 __all__ = [
@@ -25,8 +44,28 @@ __all__ = [
     "LoginRequest",
     "Token",
     "TokenData",
+    "TokenList",
+    "ClienteCreate",
+    "ClienteCreateWithPersona",
+    "ClienteUpdate",
+    "ClienteResponse",
+    "ClienteList",
+    "ProveedorCreate",
+    "ProveedorCreateWithPersona",
+    "ProveedorUpdate",
+    "ProveedorResponse",
+    "ProveedorList",
+    "EmpleadoCreate",
+    "EmpleadoCreateWithPersona",
+    "EmpleadoUpdate",
+    "EmpleadoResponse",
+    "EmpleadoList",
+    "IdentificacionCreate",
+    "IdentificacionResponse",
+    "ContactoCreate",
+    "ContactoResponse",
     "PersonaCreate",
-    "PersonaList",
     "PersonaUpdate",
     "PersonaResponse",
+    "PersonaList",
 ]
