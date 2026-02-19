@@ -1,6 +1,6 @@
 from decimal import Decimal
 
-from pydantic import EmailStr, Field
+from pydantic import Field
 
 from app.models.persona import TipoPersona, TipoIdentificacion, TipoContacto
 from app.schemas.base import BaseSchema, BaseResponseSchema

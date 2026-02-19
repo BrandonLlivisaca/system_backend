@@ -98,7 +98,7 @@ class Persona(BaseModel):
     #)
     #dias_credito: Mapped[int] = mapped_column(Integer, default=0)
 
-class Identifacion(BaseModel):
+class Identificacion(BaseModel):
     """Identificacion de una persona"""
     __tablename__ = "identificacion"
 
