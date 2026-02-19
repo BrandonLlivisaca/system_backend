@@ -18,8 +18,8 @@ class PersonaRepository(BaseRepository[Persona]):
                 .join(Identificacion)
                 .where(
                     Identificacion.numero == numero,
-                    Identificacion.is_active == True,
-                    Persona.is_active == True
+                    Identificacion.is_active.is_(True),
+                    Persona.is_active.is_(True)
                 )
                 .options(selectinload(Persona.identificacion))
             )
@@ -30,7 +30,7 @@ class PersonaRepository(BaseRepository[Persona]):
         """Obtiene una persona por ID con sus relaciones."""
         query = (
             select(Persona)
-            .where(Persona.id == id, Persona.is_active == True)
+            .where(Persona.id == id, Persona.is_active.is_(True))
             .options(
                 selectinload(Persona.identificacion)
             )
