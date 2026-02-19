@@ -10,7 +10,7 @@ class BaseModel(Base):
 
     __abstract__ = True #Don't create the table, it's only used for inheritance
 
-    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    #id: Mapped[int] = mapped_column(primary_key=True, index=True)
     created_at: Mapped[datetime] = mapped_column(server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(server_default=func.now(),
                                                  onupdate=func.now())

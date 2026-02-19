@@ -12,7 +12,7 @@ class BaseSchema(BaseModel):
 class BaseResponseSchema(BaseSchema):
     """Schema base para respuestas que incluyen campos de auditoría."""
 
-    id: int
+    #id: int
     created_at: datetime
     updated_at: datetime
     is_active: bool

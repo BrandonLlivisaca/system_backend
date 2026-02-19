@@ -5,14 +5,31 @@ from app.schemas.user import (
     UserResponse,
     UserList,
 )
-
 from app.schemas.auth import LoginRequest, Token, TokenData
-
 from app.schemas.persona import (
-    PersonaList,
+    IdentificacionCreate,
+    IdentificacionResponse,
+    ContactoCreate,
+    ContactoResponse,
+    PersonaCreate,
     PersonaUpdate,
     PersonaResponse,
-    PersonaCreate
+    PersonaList,
+    ClienteCreate,
+    ClienteCreateWithPersona,
+    ClienteUpdate,
+    ClienteResponse,
+    ClienteList,
+    ProveedorCreate,
+    ProveedorCreateWithPersona,
+    ProveedorUpdate,
+    ProveedorResponse,
+    ProveedorList,
+    EmpleadoCreate,
+    EmpleadoCreateWithPersona,
+    EmpleadoUpdate,
+    EmpleadoResponse,
+    EmpleadoList,
 )
 
 __all__ = [
@@ -24,9 +41,5 @@ __all__ = [
     "UserList",
     "LoginRequest",
     "Token",
-    "TokenData",
-    "PersonaCreate",
-    "PersonaList",
-    "PersonaUpdate",
-    "PersonaResponse",
+    "TokenData"
 ]
