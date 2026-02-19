@@ -65,6 +65,9 @@ class UserService:
 
     async def count_users(self) -> int:
         """Count user"""
-        return await self.repository.count()
+        try:
+            return await self.repository.count()
+        except Exception as e:
+            raise ValueError(f'Error counting users: {e}')
 
 

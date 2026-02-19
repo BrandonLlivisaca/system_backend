@@ -1,7 +1,7 @@
 from app.models.base import BaseModel
 from app.models.user import User, UserRole
 from app.models.persona import (Persona,
-                                Identifacion,
+                                Identificacion,
                                 Contacto,
                                 Cliente,
                                 Proveedor,
@@ -16,7 +16,7 @@ __all__ = [
     'User',
     'UserRole',
     'Persona',
-    'Identifacion',
+    'Identificacion',
     'Contacto',
     'Cliente',
     'Proveedor',

@@ -55,8 +55,8 @@ class PersonaCreate(BaseSchema):
     nombre_comercial: str | None = Field(default=None, max_length=400)
 
     # Identificaciones y contactos iniciales
-    identificaciones: list[IdentificacionCreate] = []
-    contactos: list[ContactoCreate] = []
+    identificacion: list[IdentificacionCreate] = []
+    contacto: list[ContactoCreate] = []
     #tipo_identificacion: TipoIdentificacion
     #numero_identificacion: str = Field(min_length=8, max_length=30)
 
@@ -105,7 +105,7 @@ class PersonaResponse(BaseResponseSchema):
     apellido: str | None
     razon_social: str | None
     nombre_comercial: str | None
-    identificaciones: list[IdentificacionResponse] = []
+    identificacion: list[IdentificacionResponse] = []
     contactos: list[ContactoResponse] = []
 
 class PersonaList(BaseSchema):

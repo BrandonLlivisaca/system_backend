@@ -48,20 +48,20 @@ class Persona(BaseModel):
     apellido: Mapped[str | None] = mapped_column(String(250))
 
     # Basic Information - Juridic Person
-    razon_social: Mapped[str] = mapped_column(String(400), nullable=False)
-    nombre_comercial: Mapped[str] = mapped_column(String(400), nullable=False)
+    razon_social: Mapped[str | None] = mapped_column(String(400), nullable=True)
+    nombre_comercial: Mapped[str | None] = mapped_column(String(400), nullable=True)
 
     # Tipo de persona
     #tipo: Mapped[TipoPersona] = mapped_column(String(30), nullable=False)
 
     # Relations
-    identificaciones: Mapped[list["Identificacion"]] = relationship(
+    identificacion: Mapped[list["Identificacion"]] = relationship(
         "Identificacion",
         back_populates="persona",
         cascade="all, delete-orphan",
     )
 
-    contactos: Mapped[list["Contacto"]] = relationship(
+    contacto: Mapped[list["Contacto"]] = relationship(
         "Contacto",
         back_populates="persona",
         cascade="all, delete-orphan",
