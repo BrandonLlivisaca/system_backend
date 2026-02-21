@@ -120,6 +120,7 @@ class Contacto(BaseModel):
     persona_id: Mapped[int] = mapped_column(ForeignKey("persona.id"), nullable=False)
     tipo: Mapped[TipoIdentificacion] = mapped_column(String(30), nullable=False)
     valor: Mapped[String] = mapped_column(String(300), nullable=False, unique=True, index=True)
+    es_principal: Mapped[bool] = mapped_column(default=False, nullable=False)
 
     #Relation
     persona: Mapped[Persona] = relationship(

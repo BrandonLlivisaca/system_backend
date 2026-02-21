@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 from app.models import Identificacion
-from app.models.persona import Persona, TipoPersona
+from app.models.persona import Persona, TipoPersona, Contacto
 from app.repositories.base import BaseRepository
 
 class PersonaRepository(BaseRepository[Persona]):
@@ -57,9 +57,12 @@ class PersonaRepository(BaseRepository[Persona]):
         """Retrieves all active records with pagination """
         query = (select(Persona)
                  .join(Identificacion)
+                 .join(Contacto)
                  .where(Identificacion.is_active.is_(True),
-                        Persona.is_active.is_(True))
+                        Persona.is_active.is_(True),
+                        Contacto.is_active.is_(True))
                  .options(selectinload(Persona.identificacion))
+                 .options(selectinload(Persona.contacto))
                  .offset(skip).limit(limit))
 
         result = await self.db.execute(query)
@@ -80,3 +83,8 @@ class IdentificacionRepository(BaseRepository[Identificacion]):
     """Repository para identificaciones."""
     def __init__(self, db: AsyncSession):
         super().__init__(Identificacion, db)
+
+class ContactoRepository(BaseRepository[Contacto]):
+    """Repository para contactos."""
+    def __init__(self, db: AsyncSession):
+        super().__init__(Contacto, db)

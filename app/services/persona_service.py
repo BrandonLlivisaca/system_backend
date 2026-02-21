@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.persona import Persona, TipoPersona
-from app.repositories.persona_repository import PersonaRepository, IdentificacionRepository
+from app.repositories.persona_repository import PersonaRepository, IdentificacionRepository, ContactoRepository
 from app.schemas.persona import PersonaCreate, PersonaUpdate
 
 class PersonaService:
@@ -10,6 +10,7 @@ class PersonaService:
         self.db = db
         self.repository = PersonaRepository(db)
         self.identificacion_repository = IdentificacionRepository(db)
+        self.contacto_repository = ContactoRepository(db)
 
     async def create_persona(self, data: PersonaCreate) -> Persona:
         """Create a new persona"""
@@ -31,11 +32,12 @@ class PersonaService:
              identificacion_data["persona_id"] = persona.id
              await self.identificacion_repository.create(identificacion_data)
         #
-        # # Crear contactos
-        # for contacto in data.contactos:
-        #     contacto_data = contacto.model_dump()
-        #     contacto_data["persona_id"] = persona.id
-        #     await self.contacto_repository.create(contacto_data)
+        # Crear contactos
+        for contacto in data.contacto:
+             contacto_data = contacto.model_dump()
+             contacto_data["persona_id"] = persona.id
+             print(f'Data ---> {contacto_data}')
+             await self.contacto_repository.create(contacto_data)
 
         # Refrescar para obtener las relaciones
         return await self.repository.get_by_id(persona.id)
